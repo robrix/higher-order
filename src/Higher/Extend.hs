@@ -1,14 +1,14 @@
 {-# LANGUAGE RankNTypes, TypeOperators #-}
 module Higher.Extend
 ( Extend(..)
-, module H
 , (<<=)
 , (=>>)
+, module H
 ) where
 
-import Higher.Function as H
+import Higher.Functor as H
 
-class Extend w where
+class H.Functor w => Extend w where
   duplicate :: w a ~> w (w a)
   extend :: (w a ~> b) -> (w a ~> w b)
 
