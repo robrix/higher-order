@@ -1,9 +1,10 @@
 {-# LANGUAGE RankNTypes, TypeOperators #-}
 module Higher.Functor
 ( Functor(..)
+, module X
 ) where
 
-import Higher.Function
+import Higher.Function as X
 import Prelude hiding (Functor)
 
 class Functor f where
