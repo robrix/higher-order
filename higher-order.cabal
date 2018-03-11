@@ -18,12 +18,14 @@ library
                      , Higher.Biproduct
                      , Higher.Bisum
                      , Higher.Biunit
+                     , Higher.Copointed
                      , Higher.Extend
                      , Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
                      , Higher.Generics
                      , Higher.Monoid
+                     , Higher.Pointed
                      , Higher.Product
                      , Higher.Semigroup
                      , Higher.Sum
