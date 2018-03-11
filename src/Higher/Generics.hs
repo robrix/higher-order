@@ -14,7 +14,7 @@ import Higher.Bisum as X
 import Higher.Biunit as X
 import Higher.Product
 import Higher.Sum
-import GHC.Generics
+import GHC.Generics as X
 
 class Rollable t where
   type Unrolled t :: * -> *
