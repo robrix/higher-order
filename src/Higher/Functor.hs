@@ -1,4 +1,4 @@
-{-# LANGUAGE RankNTypes, TypeOperators #-}
+{-# LANGUAGE PolyKinds, RankNTypes, TypeOperators #-}
 module Higher.Functor
 ( Functor(..)
 , module X
