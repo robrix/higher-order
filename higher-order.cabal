@@ -16,6 +16,7 @@ library
   exposed-modules:     Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
+                     , Higher.Generics
                      , Higher.Monoid
                      , Higher.Semigroup
   build-depends:       base >=4.10 && <4.11
