@@ -8,6 +8,7 @@ module Higher.Internal
 , ana
 , apo
 , futu
+, Fix(..)
 , hylo
 , Free(..)
 , FreeF
@@ -82,6 +83,9 @@ apo coalgebra = mapo (\ coyield -> H.fmap coyield . coalgebra)
 
 futu :: (Corecursive t, H.Functor (Cobase t)) => (a ~> Cobase t (Free (Cobase t) a)) -> (a ~> t)
 futu coalgebra = mfutu (\ coyield -> H.fmap coyield . coalgebra)
+
+
+newtype Fix f x = Fix { unFix :: f (Fix f) x }
 
 
 hylo :: forall f a b . H.Functor f => (f b ~> b) -> (a ~> f a) -> (a ~> b)
