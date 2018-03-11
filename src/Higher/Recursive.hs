@@ -3,6 +3,7 @@ module Higher.Recursive
 , cata
 , para
 , futu
+, hylo
 , module H
 ) where
 

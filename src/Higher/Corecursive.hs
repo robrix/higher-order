@@ -3,6 +3,7 @@ module Higher.Corecursive
 , ana
 , apo
 , histo
+, hylo
 , module H
 ) where
 

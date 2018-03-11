@@ -8,6 +8,7 @@ module Higher.Internal
 , ana
 , apo
 , futu
+, hylo
 , Free(..)
 , FreeF
 , Cofree(..)
@@ -81,6 +82,12 @@ apo coalgebra = mapo (\ coyield -> H.fmap coyield . coalgebra)
 
 futu :: (Corecursive t, H.Functor (Cobase t)) => (a ~> Cobase t (Free (Cobase t) a)) -> (a ~> t)
 futu coalgebra = mfutu (\ coyield -> H.fmap coyield . coalgebra)
+
+
+hylo :: forall f a b . H.Functor f => (f b ~> b) -> (a ~> f a) -> (a ~> b)
+hylo f g = h
+  where h :: a ~> b
+        h = f . H.fmap h . g
 
 
 newtype Free f a x = Free { runFree :: (a :+: f (Free f a)) x }
