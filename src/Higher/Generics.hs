@@ -75,3 +75,25 @@ instance (Bifunctor l, Bifunctor r) => Bifunctor (l :*: r) where
 
 instance (Bitraversable l, Bitraversable r) => Bitraversable (l :*: r) where
   bitraverse f g (l :*: r) = (:*:) <$> bitraverse f g l <*> bitraverse f g r
+
+
+data (l :+: r) a b = L2 (l a b) | R2 (r a b)
+  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+
+inl :: l a b -> (l :+: r) a b
+inl = L2
+
+inr :: r a b -> (l :+: r) a b
+inr = R2
+
+instance (Bifoldable l, Bifoldable r) => Bifoldable (l :+: r) where
+  bifoldMap f g (L2 l) = bifoldMap f g l
+  bifoldMap f g (R2 r) = bifoldMap f g r
+
+instance (Bifunctor l, Bifunctor r) => Bifunctor (l :+: r) where
+  bimap f g (L2 l) = L2 (bimap f g l)
+  bimap f g (R2 r) = R2 (bimap f g r)
+
+instance (Bitraversable l, Bitraversable r) => Bitraversable (l :+: r) where
+  bitraverse f g (L2 l) = L2 <$> bitraverse f g l
+  bitraverse f g (R2 r) = R2 <$> bitraverse f g r
