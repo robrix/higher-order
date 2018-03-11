@@ -33,6 +33,7 @@ library
                      , Higher.Generics
                      , Higher.Monad
                      , Higher.Monad.Free
+                     , Higher.Monad.Freer
                      , Higher.Monoid
                      , Higher.Pointed
                      , Higher.Product
