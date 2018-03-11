@@ -22,10 +22,10 @@ type CofreerF f a = Const a :**: Coyoneda f
 instance Copointed (Cofreer f) where
   copoint = exl . runCofreer
 
-instance H.Functor f => H.Functor (Cofreer f) where
+instance H.Functor (Cofreer f) where
   fmap f = cata (embed . (first f <<***>> id))
 
-instance H.Functor f => Extend (Cofreer f) where
+instance Extend (Cofreer f) where
   extend f  = ana (Const . f <<&&&>> exr . runCofreer)
   duplicate = ana (Const     <<&&&>> exr . runCofreer)
 

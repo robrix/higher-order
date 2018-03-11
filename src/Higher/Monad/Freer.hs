@@ -22,10 +22,10 @@ type FreerF f a = Const a :++: Coyoneda f
 instance Pointed (Freer f) where
   point = Freer . inl
 
-instance H.Functor f => H.Functor (Freer f) where
+instance H.Functor (Freer f) where
   fmap f = cata (embed . (first f <<+++>> id))
 
-instance H.Functor f => Bind (Freer f) where
+instance Bind (Freer f) where
   bind f = cata (f . getConst <<|||>> Freer . inr)
   join   = cata (    getConst <<|||>> Freer . inr)
 
