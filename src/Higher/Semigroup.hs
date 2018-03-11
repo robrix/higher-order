@@ -1,4 +1,4 @@
 module Higher.Semigroup where
 
-class Semigroup s where
-  (<>) :: s x -> s x -> s x
+class Semigroup a where
+  (<>) :: a x -> a x -> a x
