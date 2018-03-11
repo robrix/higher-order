@@ -2,10 +2,11 @@
 module Higher.Bind
 ( Bind(..)
 , (>>=)
+, (=<<)
 ) where
 
 import Higher.Function as H
-import Prelude hiding ((>>=))
+import Prelude hiding ((>>=), (=<<))
 
 class Bind m where
   join :: m (m a) ~> m a
@@ -13,3 +14,6 @@ class Bind m where
 
 (>>=) :: Bind m => m a x -> (a ~> m b) -> m b x
 m >>= f = bind f m
+
+(=<<) :: Bind m => (a ~> m b) -> (m a ~> m b)
+(=<<) = bind
