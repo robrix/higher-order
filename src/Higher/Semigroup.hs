@@ -11,3 +11,9 @@ instance Semigroup Maybe where
 
 instance Semigroup [] where
   (<>) = (<|>)
+
+
+newtype Endo a x = Endo { appEndo :: a x -> a x }
+
+instance Semigroup (Endo a) where
+  Endo a <> Endo b = Endo (a . b)

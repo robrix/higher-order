@@ -12,3 +12,6 @@ instance Monoid Maybe where
 
 instance Monoid [] where
   zero = []
+
+instance Monoid (Endo a) where
+  zero = Endo id
