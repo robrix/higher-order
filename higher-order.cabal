@@ -30,6 +30,7 @@ library
                      , Higher.Functor
                      , Higher.Generics
                      , Higher.Monad
+                     , Higher.Monad.Free
                      , Higher.Monoid
                      , Higher.Pointed
                      , Higher.Product
