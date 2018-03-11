@@ -16,6 +16,7 @@ library
   exposed-modules:     Higher.Biconst
                      , Higher.Biproduct
                      , Higher.Bisum
+                     , Higher.Biunit
                      , Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
