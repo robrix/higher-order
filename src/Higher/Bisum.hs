@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveFoldable, DeriveFunctor, DeriveTraversable, TypeOperators #-}
 module Higher.Bisum
 ( Bisum(..)
-, (:++:)
+, (:++:)(..)
 ) where
 
 import Data.Bifoldable
