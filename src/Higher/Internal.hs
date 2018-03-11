@@ -87,6 +87,14 @@ futu coalgebra = mfutu (\ coyield -> H.fmap coyield . coalgebra)
 
 newtype Fix f x = Fix { unFix :: f (Fix f) x }
 
+instance Recursive (Fix f) where
+  type Base (Fix f) = f
+  project = unFix
+
+instance Corecursive (Fix f) where
+  type Cobase (Fix f) = f
+  embed = Fix
+
 
 hylo :: forall f a b . H.Functor f => (f b ~> b) -> (a ~> f a) -> (a ~> b)
 hylo f g = h
