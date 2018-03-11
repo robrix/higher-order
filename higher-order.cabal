@@ -13,7 +13,8 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Higher.Biproduct
+  exposed-modules:     Higher.Biconst
+                     , Higher.Biproduct
                      , Higher.Bisum
                      , Higher.Foldable
                      , Higher.Function
