@@ -18,6 +18,7 @@ library
                      , Higher.Biproduct
                      , Higher.Bisum
                      , Higher.Biunit
+                     , Higher.Extend
                      , Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
