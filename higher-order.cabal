@@ -19,6 +19,7 @@ library
                      , Higher.Functor
                      , Higher.Generics
                      , Higher.Monoid
+                     , Higher.Product
                      , Higher.Semigroup
   build-depends:       base >=4.10 && <4.11
   hs-source-dirs:      src
