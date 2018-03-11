@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveFoldable, DeriveFunctor, DeriveTraversable #-}
+{-# LANGUAGE DeriveFoldable, DeriveFunctor, DeriveTraversable, TypeOperators #-}
 module Higher.Generics where
 
 import Data.Bifoldable
@@ -56,3 +56,22 @@ instance Bifunctor Par2R where
 
 instance Bitraversable Par2R where
   bitraverse _ g (Par2R b) = Par2R <$> g b
+
+
+data (l :*: r) a b = l a b :*: r a b
+  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+
+exl :: (l :*: r) a b -> l a b
+exl (l :*: _) = l
+
+exr :: (l :*: r) a b -> r a b
+exr (_ :*: r) = r
+
+instance (Bifoldable l, Bifoldable r) => Bifoldable (l :*: r) where
+  bifoldMap f g (l :*: r) = bifoldMap f g l `mappend` bifoldMap f g r
+
+instance (Bifunctor l, Bifunctor r) => Bifunctor (l :*: r) where
+  bimap f g (l :*: r) = bimap f g l :*: bimap f g r
+
+instance (Bitraversable l, Bitraversable r) => Bitraversable (l :*: r) where
+  bitraverse f g (l :*: r) = (:*:) <$> bitraverse f g l <*> bitraverse f g r
