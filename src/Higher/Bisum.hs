@@ -2,12 +2,13 @@
 module Higher.Bisum
 ( Bisum(..)
 , (:++:)(..)
+, module H
 ) where
 
 import Data.Bifoldable
 import Data.Bifunctor
 import Data.Bitraversable
-import Higher.Function
+import Higher.Functor as H
 
 class Bisum s where
   biinl :: l ~~> (l `s` r)
@@ -22,7 +23,7 @@ class Bisum s where
 
 
 data (l :++: r) a b = L2 (l a b) | R2 (r a b)
-  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+  deriving (Eq, Foldable, Prelude.Functor, Ord, Show, Traversable)
 
 instance (Bifoldable l, Bifoldable r) => Bifoldable (l :++: r) where
   bifoldMap f g (L2 l) = bifoldMap f g l
@@ -42,3 +43,6 @@ instance Bisum (:++:) where
 
   (f <<|||>> _) (L2 a) = f a
   (_ <<|||>> g) (R2 b) = g b
+
+instance (H.Functor l, H.Functor r) => H.Functor (l :++: r) where
+  fmap f = H.fmap f <<+++>> H.fmap f
