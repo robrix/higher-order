@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE PolyKinds, TypeOperators #-}
 module Higher.Copointed
 ( Copointed(..)
 , module H
