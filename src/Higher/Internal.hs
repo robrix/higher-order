@@ -3,6 +3,7 @@ module Higher.Internal
 ( Recursive(..)
 , cata
 , para
+, histo
 , Corecursive(..)
 , ana
 , apo
@@ -37,11 +38,19 @@ class Recursive (t :: k -> *) where
     where go :: t ~> a
           go = algebra (id <&&&> go) . project
 
+  mhisto :: forall a . H.Functor (Base t) => (forall b . (b ~> Cofree (Base t) a) -> (Base t b ~> a)) -> (t ~> a)
+  mhisto algebra = copoint . go
+    where go :: t ~> Cofree (Base t) a
+          go = Cofree . (algebra id <&&&> id) . H.fmap go . project
+
 cata :: (Recursive t, H.Functor (Base t)) => (Base t a ~> a) -> (t ~> a)
 cata algebra = mcata (\ yield -> algebra . H.fmap yield)
 
 para :: (Recursive t, H.Functor (Base t)) => (Base t (t :*: a) ~> a) -> (t ~> a)
 para algebra = mpara (\ yield -> algebra . H.fmap yield)
+
+histo :: (Recursive t, H.Functor (Base t)) => (Base t (Cofree (Base t) a) ~> a) -> (t ~> a)
+histo algebra = mhisto (\ yield -> algebra . H.fmap yield)
 
 
 class Corecursive (t :: k -> *) where
