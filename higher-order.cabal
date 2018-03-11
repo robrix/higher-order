@@ -22,6 +22,7 @@ library
                      , Higher.Biunit
                      , Higher.Comonad
                      , Higher.Comonad.Cofree
+                     , Higher.Comonad.Cofreer
                      , Higher.Const
                      , Higher.Copointed
                      , Higher.Corecursive
