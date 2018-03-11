@@ -43,3 +43,16 @@ instance Bifunctor Par2L where
 
 instance Bitraversable Par2L where
   bitraverse f _ (Par2L a) = Par2L <$> f a
+
+
+newtype Par2R a b = Par2R { unPar2R :: b }
+  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+
+instance Bifoldable Par2R where
+  bifoldMap _ g (Par2R b) = g b
+
+instance Bifunctor Par2R where
+  bimap _ g (Par2R b) = Par2R (g b)
+
+instance Bitraversable Par2R where
+  bitraverse _ g (Par2R b) = Par2R <$> g b
