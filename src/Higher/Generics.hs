@@ -1,10 +1,12 @@
-{-# LANGUAGE DefaultSignatures, FlexibleContexts, FlexibleInstances, MultiParamTypeClasses, TypeFamilies, TypeOperators, UndecidableInstances #-}
+{-# LANGUAGE AllowAmbiguousTypes, DataKinds, DefaultSignatures, FlexibleContexts, FlexibleInstances, MultiParamTypeClasses, ScopedTypeVariables, TypeApplications, TypeFamilies, TypeOperators, UndecidableInstances #-}
 module Higher.Generics
-( Rollable1(..)
+( Rollable(..)
+, Rollable1(..)
 , module X
 ) where
 
 import Data.Coerce
+import Data.Functor.Const
 import Higher.Biconst as X
 import Higher.Biidentity as X
 import Higher.Biproduct as X
@@ -13,6 +15,22 @@ import Higher.Biunit as X
 import Higher.Product
 import Higher.Sum
 import GHC.Generics
+
+class Rollable t where
+  type Unrolled t :: * -> *
+  type Unrolled t = GUnrolled (EqK t (Rep t)) t (Rep t)
+
+  unroll ::          t   -> Unrolled t t
+  roll   :: Unrolled t t ->          t
+
+  default unroll :: forall eq . (Generic t, eq ~ EqK t (Rep t), GRollable eq t (Rep t), Unrolled t ~ GUnrolled eq t (Rep t))
+                 =>          t   -> Unrolled t t
+  default roll   :: forall eq . (Generic t, eq ~ EqK t (Rep t), GRollable eq t (Rep t), Unrolled t ~ GUnrolled eq t (Rep t))
+                 => Unrolled t t ->          t
+
+  unroll = gunroll @eq @t @(Rep t) . from
+  roll   =                           to   . groll @eq @t @(Rep t)
+
 
 class Rollable1 t where
   type Unrolled1 t :: * -> * -> *
@@ -28,6 +46,65 @@ class Rollable1 t where
 
   unroll1 = gunroll1 . from1
   roll1   =            to1   . groll1
+
+
+type family EqK a (b :: * -> *) :: Bool where
+  EqK t (K1 i t) = 'True
+  EqK t _        = 'False
+
+
+class  GRollable (eq :: Bool) t (rep :: * -> *) where
+  type GUnrolled  eq          t  rep :: * -> *
+  gunroll ::                rep t -> GUnrolled eq t rep t
+  groll   :: GUnrolled eq t rep t ->                rep t
+
+instance ( eqF ~ EqK t f
+         , GRollable eqF t f
+         )
+      => GRollable 'False t (M1 i c f) where
+  type   GUnrolled 'False t (M1 i c f) = GUnrolled (EqK t f) t f
+  gunroll = gunroll @eqF @t @f . unM1
+  groll   =                        M1 . groll @eqF @t @f
+
+instance ( eqL ~ EqK t l
+         , eqR ~ EqK t r
+         , GRollable eqL t l
+         , GRollable eqR t r
+         )
+      => GRollable 'False t (l :*: r) where
+  type   GUnrolled 'False t (l :*: r)
+    = (   GUnrolled (EqK t l) t l
+      :*: GUnrolled (EqK t r) t r )
+  gunroll = gunroll @eqL @t @l <***> gunroll @eqR @t @r
+  groll   = groll   @eqL @t @l <***> groll   @eqR @t @r
+
+instance ( eqL ~ EqK t l
+         , eqR ~ EqK t r
+         , GRollable eqL t l
+         , GRollable eqR t r
+         )
+      => GRollable 'False t (l :+: r) where
+  type   GUnrolled 'False t (l :+: r)
+    = (   GUnrolled (EqK t l) t l
+      :+: GUnrolled (EqK t r) t r)
+  gunroll = gunroll @eqL @t @l <+++> gunroll @eqR @t @r
+  groll   = groll   @eqL @t @l <+++> groll   @eqR @t @r
+
+instance GRollable 'True t (K1 i t) where
+  type   GUnrolled 'True t (K1 i t) = Par1
+  gunroll = coerce
+  groll   = coerce
+
+instance GRollable 'False t (K1 i k) where
+  type   GUnrolled 'False t (K1 i k) = Const k
+  gunroll = coerce
+  groll   = coerce
+
+instance GRollable 'False t U1 where
+  type   GUnrolled 'False t U1 = U1
+  gunroll = coerce
+  groll   = coerce
+
 
 class  GRollable1 t (rep :: * -> *) where
   type GUnrolled1 t  rep :: * -> * -> *
