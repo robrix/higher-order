@@ -23,6 +23,7 @@ library
                      , Higher.Comonad
                      , Higher.Const
                      , Higher.Copointed
+                     , Higher.Corecursive
                      , Higher.Extend
                      , Higher.Foldable
                      , Higher.Function
