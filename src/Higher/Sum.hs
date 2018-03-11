@@ -1,6 +1,7 @@
 {-# LANGUAGE TypeOperators #-}
 module Higher.Sum
 ( Sum(..)
+, (:+:)(..)
 ) where
 
 import Higher.Function
