@@ -13,8 +13,7 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Higher.Category
-                     , Higher.Foldable
+  exposed-modules:     Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
                      , Higher.Generics
