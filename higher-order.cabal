@@ -21,6 +21,7 @@ library
                      , Higher.Bisum
                      , Higher.Biunit
                      , Higher.Comonad
+                     , Higher.Comonad.Cofree
                      , Higher.Const
                      , Higher.Copointed
                      , Higher.Corecursive

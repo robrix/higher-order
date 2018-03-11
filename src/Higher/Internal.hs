@@ -9,6 +9,8 @@ module Higher.Internal
 , futu
 , Free(..)
 , FreeF
+, Cofree(..)
+, CofreeF
 ) where
 
 import Higher.Bifunctor
@@ -94,3 +96,27 @@ instance Recursive (Free f a) where
 instance Corecursive (Free f a) where
   type Cobase (Free f a) = FreeF f a
   embed = Free . (inl . getConst <<|||>> inr)
+
+
+newtype Cofree f a x = Cofree { runCofree :: (a :*: f (Cofree f a)) x }
+
+type CofreeF f a = Const a :**: f
+
+
+instance Copointed (Cofree f) where
+  copoint = exl . runCofree
+
+instance H.Functor f => H.Functor (Cofree f) where
+  fmap f = cata (embed . (first f <<***>> id))
+
+instance H.Functor f => Extend (Cofree f) where
+  extend f  = ana (Const . f <<&&&>> exr . runCofree)
+  duplicate = ana (Const     <<&&&>> exr . runCofree)
+
+instance Recursive (Cofree f a) where
+  type Base (Cofree f a) = CofreeF f a
+  project = (Const . exl <<&&&>> exr) . runCofree
+
+instance Corecursive (Cofree f a) where
+  type Cobase (Cofree f a) = CofreeF f a
+  embed = Cofree . (getConst . biexl <&&&> biexr)
