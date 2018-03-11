@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveFoldable, DeriveFunctor, DeriveTraversable, TypeOperators #-}
+{-# LANGUAGE DeriveFoldable, DeriveFunctor, DeriveTraversable, PolyKinds, TypeOperators #-}
 module Higher.Bisum
 ( Bisum(..)
 , (:++:)(..)
