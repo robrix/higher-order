@@ -20,6 +20,7 @@ library
                      , Higher.Bisum
                      , Higher.Biunit
                      , Higher.Comonad
+                     , Higher.Const
                      , Higher.Copointed
                      , Higher.Extend
                      , Higher.Foldable
