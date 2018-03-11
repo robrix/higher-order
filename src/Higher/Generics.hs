@@ -30,3 +30,16 @@ instance Bifunctor (K2 k) where
 
 instance Bitraversable (K2 k) where
   bitraverse _ _ = pure . coerce
+
+
+newtype Par2L a b = Par2L { unPar2L :: a }
+  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+
+instance Bifoldable Par2L where
+  bifoldMap f _ (Par2L a) = f a
+
+instance Bifunctor Par2L where
+  bimap f _ (Par2L a) = Par2L (f a)
+
+instance Bitraversable Par2L where
+  bitraverse f _ (Par2L a) = Par2L <$> f a
