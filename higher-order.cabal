@@ -15,6 +15,7 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Higher.Biconst
                      , Higher.Biidentity
+                     , Higher.Bind
                      , Higher.Biproduct
                      , Higher.Bisum
                      , Higher.Biunit
