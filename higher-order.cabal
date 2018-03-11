@@ -25,6 +25,7 @@ library
                      , Higher.Const
                      , Higher.Copointed
                      , Higher.Corecursive
+                     , Higher.Coyoneda
                      , Higher.Extend
                      , Higher.Foldable
                      , Higher.Function
