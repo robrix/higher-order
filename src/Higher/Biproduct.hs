@@ -2,12 +2,13 @@
 module Higher.Biproduct
 ( Biproduct(..)
 , (:**:)(..)
+, module H
 ) where
 
 import Data.Bifoldable
 import Data.Bifunctor
 import Data.Bitraversable
-import Higher.Function
+import Higher.Functor as H
 
 class Biproduct p where
   biexl :: (l `p` r) ~~> l
@@ -22,7 +23,7 @@ class Biproduct p where
 
 
 data (l :**: r) a b = l a b :**: r a b
-  deriving (Eq, Foldable, Functor, Ord, Show, Traversable)
+  deriving (Eq, Foldable, Prelude.Functor, Ord, Show, Traversable)
 
 instance (Bifoldable l, Bifoldable r) => Bifoldable (l :**: r) where
   bifoldMap f g (l :**: r) = bifoldMap f g l `mappend` bifoldMap f g r
@@ -38,3 +39,6 @@ instance Biproduct (:**:) where
   biexr (_ :**: r) = r
 
   f1 <<&&&>> f2 = (:**:) <$> f1 <*> f2
+
+instance (H.Functor l, H.Functor r) => H.Functor (l :**: r) where
+  fmap f = H.fmap f <<***>> H.fmap f
