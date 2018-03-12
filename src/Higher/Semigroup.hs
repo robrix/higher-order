@@ -31,3 +31,10 @@ newtype App f a = App { getApp :: f a }
 
 instance Applicative f => Semigroup (App f) where
   App a <> App b = App (a *> b)
+
+
+newtype Alt f a = Alt { getAlt :: f a }
+  deriving (Alternative, Applicative, Eq, Foldable, Functor, Monad, Ord, Show, Traversable)
+
+instance Alternative f => Semigroup (Alt f) where
+  Alt a <> Alt b = Alt (a <|> b)
