@@ -1,5 +1,6 @@
 module Higher.Monoid where
 
+import Control.Applicative (Alternative(..))
 import Higher.Semigroup
 import Prelude hiding (Monoid)
 
@@ -15,3 +16,6 @@ instance Monoid [] where
 
 instance Monoid (Endo a) where
   zero = Endo id
+
+instance Alternative f => Monoid (Alt f) where
+  zero = Alt empty
