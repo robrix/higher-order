@@ -17,3 +17,9 @@ newtype Endo a x = Endo { appEndo :: a x -> a x }
 
 instance Semigroup (Endo a) where
   Endo a <> Endo b = Endo (a . b)
+
+
+newtype Dual a x = Dual { getDual :: a x }
+
+instance Semigroup (Dual a) where
+  (<>) = flip (<>)
