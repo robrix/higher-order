@@ -1,0 +1,4 @@
+packages: higher-order.cabal
+jobs: $ncpus
+package higher-order
+  ghc-options: -Werror
