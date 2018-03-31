@@ -1,5 +1,5 @@
 {-# LANGUAGE PolyKinds, RankNTypes, TypeOperators #-}
-module Higher.Extend
+module Higher.Functor.Extend
 ( Extend(..)
 , (<<=)
 , (=>>)

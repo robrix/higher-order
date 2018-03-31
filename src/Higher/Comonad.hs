@@ -5,6 +5,6 @@ module Higher.Comonad
 ) where
 
 import Higher.Copointed as H
-import Higher.Extend as H
+import Higher.Functor.Extend as H
 
 type Comonad w = (Copointed w, Extend w)

@@ -27,10 +27,10 @@ library
                      , Higher.Copointed
                      , Higher.Corecursive
                      , Higher.Coyoneda
-                     , Higher.Extend
                      , Higher.Foldable
                      , Higher.Function
                      , Higher.Functor
+                     , Higher.Functor.Extend
                      , Higher.Generics
                      , Higher.Monad
                      , Higher.Monad.Free
