@@ -1,5 +1,5 @@
 {-# LANGUAGE PolyKinds, RankNTypes, TypeOperators #-}
-module Higher.Bind
+module Higher.Functor.Bind
 ( Bind(..)
 , (>>=)
 , (=<<)

@@ -5,7 +5,7 @@ module Higher.Monad
 , return
 ) where
 
-import Higher.Bind as H
+import Higher.Functor.Bind as H
 import Higher.Pointed as H
 import Prelude hiding (Monad(..))
 
